@@ -3,12 +3,10 @@
 {% load i18n %}
 {% block title%}Home{% endblock title %}
 {% block content %}
-
 <!-- main content start  -->
+<!-- jQuery -->
 
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <section class="min-h-100 section welcome-sec mb-3 mt-5">
     <div class="container">
@@ -24,101 +22,53 @@
                 <img src="{% static "imgs/bitcoin.jpg" %}" alt="bitcoin" class="img-fluid br-10">
             </div>
         </div>
-        <nav>
-            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
-                    type="button" role="tab" aria-controls="nav-home" aria-selected="true">Home</button>
-                <button class="nav-link" id="nav-block_account-tab" data-bs-toggle="tab" data-bs-target="#nav-block_account"
-                    type="button" role="tab" aria-controls="nav-block_account" aria-selected="false">Block Account</button>
-                <button class="nav-link" id="nav-latest_hash-tab" data-bs-toggle="tab" data-bs-target="#nav-latest_hash"
-                    type="button" role="tab" aria-controls="nav-latest_hash" aria-selected="false">Latest Hash</button>
-                <button class="nav-link" id="nav-bc_per_block-tab" data-bs-toggle="tab" data-bs-target="#nav-bc_per_block"
-                    type="button" role="tab" aria-controls="nav-bc_per_block" aria-selected="false">Bc Per Block</button>
-
-                <button class="nav-link" id="nav-difficulty-tab" data-bs-toggle="tab" data-bs-target="#nav-difficulty"
-                    type="button" role="tab" aria-controls="nav-difficulty" aria-selected="false">Difficulty</button>
-                <button class="nav-link" id="nav-total_bc-tab" data-bs-toggle="tab" data-bs-target="#nav-total_bc"
-                    type="button" role="tab" aria-controls="nav-total_bc" aria-selected="false">Total BC</button>
-                <button class="nav-link" id="nav-probablity-tab" data-bs-toggle="tab" data-bs-target="#nav-probablity"
-                    type="button" role="tab" aria-controls="nav-probablity" aria-selected="false">Probablity</button>
-                <button class="nav-link" id="nav-hash_to_win-tab" data-bs-toggle="tab" data-bs-target="#nav-hash_to_win"
-                    type="button" role="tab" aria-controls="nav-hash_to_win" aria-selected="false">Hash To Win</button>
-                <button class="nav-link" id="nav-next_re_target-tab" data-bs-toggle="tab" data-bs-target="#nav-next_re_target"
-                    type="button" role="tab" aria-controls="nav-next_re_target" aria-selected="false">Next Re Target</button>
-                <button class="nav-link" id="nav-unconfirmed_count-tab" data-bs-toggle="tab" data-bs-target="#nav-unconfirmed_count"
-                    type="button" role="tab" aria-controls="nav-unconfirmed_count" aria-selected="false">Unconfirmed Count</button>
-                <button class="nav-link" id="nav-market_cap-tab" data-bs-toggle="tab" data-bs-target="#nav-market_cap"
-                    type="button" role="tab" aria-controls="nav-market_cap" aria-selected="false">Market Cap</button>
-                <button class="nav-link" id="nav-stats-tab" data-bs-toggle="tab" data-bs-target="#nav-stats"
-                    type="button" role="tab" aria-controls="nav-stats" aria-selected="false">Stats</button>
-                <button class="nav-link" id="nav-24_hour_btcsent-tab" data-bs-toggle="tab" data-bs-target="#nav-24_hour_btcsent"
-                    type="button" role="tab" aria-controls="nav-24_hour_btcsent" aria-selected="false">24 Hour Btcsent</button>
-
-            </div>
-        </nav>
-            <div class="tab-content" id="nav-tabContent">
-                <br>
-                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0"></div>
-                <div class="tab-pane fade show" id="nav-block_account" role="tabpanel" aria-labelledby="nav-block_account-tab" tabindex="0">Loading...</div>
-                <div class="tab-pane fade show" id="nav-latest_hash" role="tabpanel" aria-labelledby="nav-latest_hash-tab" tabindex="0">Loading...</div>
-                <div class="tab-pane fade show" id="nav-bc_per_block" role="tabpanel" aria-labelledby="nav-bc_per_block-tab" tabindex="0">Loading...</div>
-                <div class="tab-pane fade show" id="nav-difficulty" role="tabpanel" aria-labelledby="nav-difficulty-tab" tabindex="0">Loading...</div>
-                <div class="tab-pane fade show" id="nav-total_bc" role="tabpanel" aria-labelledby="nav-total_bc-tab" tabindex="0">Loading...</div>
-                <div class="tab-pane fade show" id="nav-probablity" role="tabpanel" aria-labelledby="nav-probablity-tab" tabindex="0">Loading...</div>
-                <div class="tab-pane fade show" id="nav-hash_to_win" role="tabpanel" aria-labelledby="nav-hash_to_win-tab" tabindex="0">Loading...</div>
-                <div class="tab-pane fade show" id="nav-next_re_target" role="tabpanel" aria-labelledby="nav-next_re_target-tab" tabindex="0">Loading...</div>
-                <div class="tab-pane fade show" id="nav-unconfirmed_count" role="tabpanel" aria-labelledby="nav-unconfirmed_count-tab" tabindex="0">Loading...</div>
-                <div class="tab-pane fade show" id="nav-market_cap" role="tabpanel" aria-labelledby="nav-market_cap-tab" tabindex="0">Loading...</div>
-                <div class="tab-pane fade show" id="nav-stats" role="tabpanel" aria-labelledby="nav-stats-tab" tabindex="0">Loading...</div>
-                <div class="tab-pane fade show" id="nav-24_hour_btcsent" role="tabpanel" aria-labelledby="nav-24_hour_btcsent-tab" tabindex="0">Loading...</div>
-            </div>
-        </div>
-
+        
+    </div>
     <script>
         $(document).ready(function() {
             function loadTabContent(tabId) {
                 let url;
                 switch(tabId) {
                     case 'nav-block_account':
-                        url = '/api/block_account';
-                        break;
+                    url = '/api/block_account';
+                    break;
                     case 'nav-latest_hash':
-                        url = '/api/latest_hash';
-                        break;
+                    url = '/api/latest_hash';
+                    break;
                     case 'nav-bc_per_block':
-                        url = '/api/bc_per_block';
-                        break;
+                    url = '/api/bc_per_block';
+                    break;
                     case 'nav-difficulty':
-                        url = '/api/difficulty';
-                        break;
+                    url = '/api/difficulty';
+                    break;
                     case 'nav-total_bc':
-                        url = '/api/total_bc';
-                        break;
+                    url = '/api/total_bc';
+                    break;
                     case 'nav-probablity':
-                        url = '/api/probablity';
-                        break;
+                    url = '/api/probablity';
+                    break;
                     case 'nav-hash_to_win':
-                        url = '/api/hash_to_win';
-                        break;
+                    url = '/api/hash_to_win';
+                    break;
                     case 'nav-next_re_target':
-                        url = '/api/next_re_target';
-                        break;
+                    url = '/api/next_re_target';
+                    break;
                     case 'nav-unconfirmed_count':
-                        url = '/api/unconfirmed_count';
-                        break;
+                    url = '/api/unconfirmed_count';
+                    break;
                     case 'nav-market_cap':
-                        url = '/api/market_cap';
-                        break;
+                    url = '/api/market_cap';
+                    break;
                     case 'nav-stats':
-                        url = '/api/stats';
-                        break;
+                    url = '/api/stats';
+                    break;
                     case 'nav-24_hour_btcsent':
-                        url = '/api/24_hour_btcsent';
-                        break;
+                    url = '/api/24_hour_btcsent';
+                    break;
                     default:
-                        return;
+                    return;
                 }
-
+                
                 // Make an AJAX call to fetch data for the tab
                 $.ajax({
                     url: url, // URL based on tab ID
@@ -132,7 +82,7 @@
                     }
                 });
             }
-
+            
             // Handle tab switch event
             $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function(event) {
                 var targetTab = $(event.target).attr('data-bs-target').substring(1); // Get the target tab ID
@@ -141,6 +91,139 @@
             });
         });
     </script>
-
 </section>
+<div class="col-12 bg-fees py-5 welcome-sec">
+    <section class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-12 col-lg-3 r-btn-nav-container">
+                <button class="scroll-arrow left-arrow d-lg-none" onclick="scrollLeft()"><i class="fa-solid fa-arrow-left"></i></button>
+                <div class="r-btn-nav">
+                    <nav>
+                        <div class="nav nav-tabs border-0" id="nav-tab" role="tablist">
+                            <div class="container-fluid">
+                                <div class="row r-nav-outer">
+                                    <div class="col-12 mb-lg-3">
+                                        <button class="nav-link RmyButton active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Home</button>
+                                    </div>
+                                    <div class="col-12 mb-lg-3">
+                                        <button class="nav-link RmyButton" id="nav-block_account-tab" data-bs-toggle="tab" data-bs-target="#nav-block_account" type="button" role="tab" aria-controls="nav-block_account" aria-selected="false">Block Account</button>
+                                    </div>
+                                    <div class="col-12 mb-lg-3">
+                                        <button class="nav-link RmyButton" id="nav-latest_hash-tab" data-bs-toggle="tab" data-bs-target="#nav-latest_hash" type="button" role="tab" aria-controls="nav-latest_hash" aria-selected="false">Latest Hash</button>
+                                    </div>
+                                    <div class="col-12 mb-lg-3">
+                                        <button class="nav-link RmyButton" id="nav-bc_per_block-tab" data-bs-toggle="tab" data-bs-target="#nav-bc_per_block" type="button" role="tab" aria-controls="nav-bc_per_block" aria-selected="false">Bc Per Block</button>
+                                    </div>
+                                    <div class="col-12 mb-lg-3">
+                                        <button class="nav-link RmyButton" id="nav-difficulty-tab" data-bs-toggle="tab" data-bs-target="#nav-difficulty" type="button" role="tab" aria-controls="nav-difficulty" aria-selected="false">Difficulty</button>
+                                    </div>
+                                    <div class="col-12 mb-lg-3">
+                                        <button class="nav-link RmyButton" id="nav-total_bc-tab" data-bs-toggle="tab" data-bs-target="#nav-total_bc" type="button" role="tab" aria-controls="nav-total_bc" aria-selected="false">Total BC</button>
+                                    </div>
+                                    <div class="col-12 mb-lg-3">
+                                        <button class="nav-link RmyButton" id="nav-probablity-tab" data-bs-toggle="tab" data-bs-target="#nav-probablity" type="button" role="tab" aria-controls="nav-probablity" aria-selected="false">Probablity</button>
+                                    </div>
+                                    <div class="col-12 mb-lg-3">
+                                        <button class="nav-link RmyButton" id="nav-hash_to_win-tab" data-bs-toggle="tab" data-bs-target="#nav-hash_to_win" type="button" role="tab" aria-controls="nav-hash_to_win" aria-selected="false">Hash To Win</button>
+                                    </div>
+                                    <div class="col-12 mb-lg-3">
+                                        <button class="nav-link RmyButton" id="nav-next_re_target-tab" data-bs-toggle="tab" data-bs-target="#nav-next_re_target" type="button" role="tab" aria-controls="nav-next_re_target" aria-selected="false">Next Re Target</button>
+                                    </div>
+                                    <div class="col-12 mb-lg-3">
+                                        <button class="nav-link RmyButton" id="nav-unconfirmed_count-tab" data-bs-toggle="tab" data-bs-target="#nav-unconfirmed_count" type="button" role="tab" aria-controls="nav-unconfirmed_count" aria-selected="false">Unconfirmed Count</button>
+                                    </div>
+                                    <div class="col-12 mb-lg-3">
+                                        <button class="nav-link RmyButton" id="nav-market_cap-tab" data-bs-toggle="tab" data-bs-target="#nav-market_cap" type="button" role="tab" aria-controls="nav-market_cap" aria-selected="false">Market Cap</button>
+                                    </div>
+                                    <div class="col-12 mb-lg-3">
+                                        <button class="nav-link RmyButton" id="nav-stats-tab" data-bs-toggle="tab" data-bs-target="#nav-stats" type="button" role="tab" aria-controls="nav-stats" aria-selected="false">Stats</button>
+                                    </div>
+                                    <div class="col-12 mb-lg-3">
+                                        <button class="nav-link RmyButton" id="nav-24_hour_btcsent-tab" data-bs-toggle="tab" data-bs-target="#nav-24_hour_btcsent" type="button" role="tab" aria-controls="nav-24_hour_btcsent" aria-selected="false">24 Hour Btcsent</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+                <button class="scroll-arrow right-arrow d-lg-none" onclick="scrollRight()"><i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+            
+            <div class="col-12 col-lg-9">
+                <section class="section">
+                    <div class="container">
+                        <div class="row min-h-100-full align-items-center justify-content-center ">
+                            <div class="col-12 col-md-9 ">
+                                <div class="fee-card">
+                                    <div class="br-10 bg-white p-2">
+                                        <div class="container">
+                                            <div class="row br-10">
+                                                <div class="col-12 text-center fw-bold my-3 text-primary">
+                                                    <h3 id="btn-div" class="fw-bold txt-blue">
+                                                        Home
+                                                    </h3>
+                                                </div>
+                                                <div class="container-fluid bg-job br-10 pt-3">
+                                                    <div class="row mb-3">
+                                                        <div class="col-12 text-center fw-bold">
+                                                            <div class="tab-content" id="nav-tabContent">
+                                                                <br>
+                                                                <h3 class="tab-pane text-break fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">Please select an option</h3>
+                                                                <h3 class="tab-pane text-break fade show" id="nav-block_account" role="tabpanel" aria-labelledby="nav-block_account-tab" tabindex="0"><i class="fa-solid fa-spinner fa-spin"></i></h3>
+                                                                <h3 class="tab-pane text-break fade show" id="nav-latest_hash" role="tabpanel" aria-labelledby="nav-latest_hash-tab" tabindex="0"><i class="fa-solid fa-spinner fa-spin"></i></h3>
+                                                                <h3 class="tab-pane text-break fade show" id="nav-bc_per_block" role="tabpanel" aria-labelledby="nav-bc_per_block-tab" tabindex="0"><i class="fa-solid fa-spinner fa-spin"></i></h3>
+                                                                <h3 class="tab-pane text-break fade show" id="nav-difficulty" role="tabpanel" aria-labelledby="nav-difficulty-tab" tabindex="0"><i class="fa-solid fa-spinner fa-spin"></i></h3>
+                                                                <h3 class="tab-pane text-break fade show" id="nav-total_bc" role="tabpanel" aria-labelledby="nav-total_bc-tab" tabindex="0"><i class="fa-solid fa-spinner fa-spin"></i></h3>
+                                                                <h3 class="tab-pane text-break fade show" id="nav-probablity" role="tabpanel" aria-labelledby="nav-probablity-tab" tabindex="0"><i class="fa-solid fa-spinner fa-spin"></i></h3>
+                                                                <h3 class="tab-pane text-break fade show" id="nav-hash_to_win" role="tabpanel" aria-labelledby="nav-hash_to_win-tab" tabindex="0"><i class="fa-solid fa-spinner fa-spin"></i></h3>
+                                                                <h3 class="tab-pane text-break fade show" id="nav-next_re_target" role="tabpanel" aria-labelledby="nav-next_re_target-tab" tabindex="0"><i class="fa-solid fa-spinner fa-spin"></i></h3>
+                                                                <h3 class="tab-pane text-break fade show" id="nav-unconfirmed_count" role="tabpanel" aria-labelledby="nav-unconfirmed_count-tab" tabindex="0"><i class="fa-solid fa-spinner fa-spin"></i></h3>
+                                                                <h3 class="tab-pane text-break fade show" id="nav-market_cap" role="tabpanel" aria-labelledby="nav-market_cap-tab" tabindex="0"><i class="fa-solid fa-spinner fa-spin"></i></h3>
+                                                                <h3 class="tab-pane text-break fade show" id="nav-stats" role="tabpanel" aria-labelledby="nav-stats-tab" tabindex="0"><i class="fa-solid fa-spinner fa-spin"></i></h3>
+                                                                <h3 class="tab-pane text-break fade show" id="nav-24_hour_btcsent" role="tabpanel" aria-labelledby="nav-24_hour_btcsent-tab" tabindex="0"><i class="fa-solid fa-spinner fa-spin"></i></h3>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const buttons = document.querySelectorAll('.RmyButton');
+        const div = document.getElementById('btn-div');
+        
+        buttons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                const buttonText = button.textContent;
+                
+                div.textContent = buttonText;
+            });
+        });
+    });
+    function scrollLeft() {
+        const container = document.querySelector('.r-btn-nav');
+        container.scrollBy({ left: -100, behavior: 'smooth' });
+    }
+    
+    function scrollRight() {
+        const container = document.querySelector('.r-btn-nav');
+        container.scrollBy({ left: 100, behavior: 'smooth' });
+    }
+    
+</script>
+</div>
 {% endblock content %}

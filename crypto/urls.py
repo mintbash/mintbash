@@ -3,6 +3,10 @@ from . import views
 
 urlpatterns = [
     path('', views.HomeView.as_view(), name='home'),
+    path('charts/', views.ChartView.as_view(), name='charts'),
+    path('api/chart_data/', views.get_chart_data, name='chart_data'),
+    path('api/chart_data/', views.get_chart_data, name='chart_data'),
+
     path('api/block_account/', views.get_block_account, name='block_account'),
     path('api/latest_hash/', views.get_latest_hash, name='latest_hash'),
     path('api/bc_per_block/', views.get_bc_per_block, name='bc_per_block'),

@@ -268,8 +268,13 @@ body {
 
 /* fees  */
 .fee-card {
-  margin-top: 100px;
-  background: linear-gradient(to bottom, blue, blue 50%, #fa9402 50%, #fa9402);
+  background: linear-gradient(
+    to left,
+    #004aad,
+    #004aad 50%,
+    #2a76a1 50%,
+    #2a76a1
+  );
 
   /* background: linear-gradient(
     184deg,
@@ -277,7 +282,7 @@ body {
     rgba(1, 33, 105, 1) 100%
   ); */
   padding: 30px;
-  border-radius: 20px 0 20px 0px;
+  border-radius: 0px 20px 0px 20px;
   -webkit-box-shadow: 0px 8px 59px 15px rgba(0, 51, 143, 1);
   -moz-box-shadow: 0px 8px 59px 15px rgba(0, 51, 143, 1);
   box-shadow: 0px 8px 59px 15px rgba(0, 51, 143, 1);
@@ -301,6 +306,81 @@ body {
   color: #1079e2;
   z-index: 1;
 }
+.r-btn-nav {
+  max-height: 100vh;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: #a6aebb transparent;
+}
+
+.r-btn-nav::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+}
+
+.r-btn-nav::-webkit-scrollbar-thumb {
+  background-color: #a6aebb;
+  border-radius: 10px;
+}
+
+.r-btn-nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.r-nav-outer .nav-link.active {
+  color: #000000 !important;
+}
+.r-nav-outer .nav-link:hover {
+  color: #000000 !important;
+  background: #ffffff !important;
+}
+
+@media (max-width: 1023px) {
+  .r-btn-nav-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .r-btn-nav {
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    width: calc(100% - 60px);
+    max-height: none;
+  }
+
+  .r-nav-outer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+
+  .r-nav-outer .col-12 {
+    flex: none;
+    width: auto;
+    margin-right: 10px;
+  }
+
+  .scroll-arrow {
+    display: block;
+    background-color: #004aad;
+    color: white;
+    border: none;
+    width: 30px;
+    height: 40px;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .left-arrow {
+    border-radius: 5px 0 0 5px;
+  }
+
+  .right-arrow {
+    border-radius: 0 5px 5px 0;
+  }
+}
+
 @media (max-device-width: 992px) {
   .welcome-sec {
     margin-top: 100px !important;
@@ -353,10 +433,10 @@ div input:-internal-autofill-selected {
     font-size: 3rem;
   }
   h2 {
-    font-size: 1.5rem;
+    font-size: 2rem;
   }
   h3 {
-    font-size: 1rem;
+    font-size: 1.8rem;
   }
   h4 {
     font-size: 0.65rem;

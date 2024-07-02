@@ -1,0 +1,180 @@
+{% extends "index.html" %}
+{% load static %}
+{% load i18n %}
+{% block title%}Charts{% endblock title %}
+{% block content %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div class="container">
+    <br>
+    <br>
+    <br>
+    <div class="row min-h-100-full align-items-center justify-content-center">
+
+        <div class="col-12 col-lg-5">
+            <h1 class="col-12 fw-bolder txt-blue mb-4">
+                CryptoInsight: Your hub for real-time cryptocurrency data, market analysis, and community chats.
+            </h1>
+        </div>
+        <div class="col-12 col-lg-5">
+            <div id="chart-container welcome-sec">
+                <canvas id="myPieChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    {% comment %} <div class="row min-h-100-full align-items-center justify-content-center">
+
+        <div class="col-12 col-lg-5">
+            <h1 class="col-12 fw-bolder txt-blue mb-4">
+                CryptoInsight: Your hub for real-time cryptocurrency data, market analysis, and community chats.
+            </h1>
+        </div>
+        <div class="col-12 col-lg-5">
+            <div id="chart-container welcome-sec">
+                <canvas id="hash-rate"></canvas>
+            </div>
+        </div>
+    </div> {% endcomment %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        fetch('/api/chart_data?chart=pools') // Replace with your API endpoint
+            .then(response => response.json())
+            .then(data => {
+                const ctx = document.getElementById('myPieChart').getContext('2d');
+                const myPieChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: Object.keys(data),
+                        datasets: [{
+                            data: Object.values(data),
+                            backgroundColor: [
+                                '#FF6384',
+                                '#36A2EB',
+                                '#FFCE56',
+                                '#4BC0C0',
+                                '#9966FF',
+                                '#FF9F40',
+                                '#FF5733',
+                                '#33FF57',
+                                '#FF33EB',
+                                '#33EBFF',
+                                '#FF3366',
+                                '#33FFCC',
+                                '#FF33CC',
+                                '#33FF66',
+                                '#FF3366'
+                            ],
+                            borderColor: [
+                                '#FF6384',
+                                '#36A2EB',
+                                '#FFCE56',
+                                '#4BC0C0',
+                                '#9966FF',
+                                '#FF9F40',
+                                '#FF5733',
+                                '#33FF57',
+                                '#FF33EB',
+                                '#33EBFF',
+                                '#FF3366',
+                                '#33FFCC',
+                                '#FF33CC',
+                                '#33FF66',
+                                '#FF3366'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function (tooltipItem) {
+                                        return tooltipItem.label + ': ' + tooltipItem.raw;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+
+
+        /*fetch('/api/chart_data?chart=hash-rate')
+            .then(response => response.json())
+            .then(data => {
+                const ctx = document.getElementById('hash-rate').getContext('2d');
+                const myPieChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: Object.keys(data),
+                        datasets: [{
+                            data: Object.values(data),
+                            backgroundColor: [
+                                '#FF6384',
+                                '#36A2EB',
+                                '#FFCE56',
+                                '#4BC0C0',
+                                '#9966FF',
+                                '#FF9F40',
+                                '#FF5733',
+                                '#33FF57',
+                                '#FF33EB',
+                                '#33EBFF',
+                                '#FF3366',
+                                '#33FFCC',
+                                '#FF33CC',
+                                '#33FF66',
+                                '#FF3366'
+                            ],
+                            borderColor: [
+                                '#FF6384',
+                                '#36A2EB',
+                                '#FFCE56',
+                                '#4BC0C0',
+                                '#9966FF',
+                                '#FF9F40',
+                                '#FF5733',
+                                '#33FF57',
+                                '#FF33EB',
+                                '#33EBFF',
+                                '#FF3366',
+                                '#33FFCC',
+                                '#FF33CC',
+                                '#33FF66',
+                                '#FF3366'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function (tooltipItem) {
+                                        return tooltipItem.label + ': ' + tooltipItem.raw;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+            */
+    });
+</script>
+<br>
+<br>
+
+{% endblock content %}
