@@ -29,7 +29,7 @@ SECRET_KEY = "django-insecure-yqoh3&=)+j5nbhuk=q)y2i^sxo%@st&y!6w31$fte^+agr3bnt
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["www.mintbash.com","mintbash.com"]
 
 
 # Application definition
