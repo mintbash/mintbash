@@ -10,11 +10,10 @@
     <br>
     <br>
     <div class="row min-h-100-full align-items-center justify-content-center">
-
         <div class="col-12 col-lg-5">
-            <h1 class="col-12 fw-bolder txt-blue mb-4">
+            <h3 class="col-12 fw-bolder txt-blue mb-4">
                 CryptoInsight: Your hub for real-time cryptocurrency data, market analysis, and community chats.
-            </h1>
+            </h3>
         </div>
         <div class="col-12 col-lg-5">
             <div id="chart-container welcome-sec">
@@ -23,25 +22,57 @@
         </div>
     </div>
 
-    {% comment %} <div class="row min-h-100-full align-items-center justify-content-center">
+    <div class="row min-h-100-full align-items-center justify-content-center">
+        <div class="col-12 col-lg-5">
+            <h3 class="col-12 fw-bolder txt-blue mb-4">
+                Mining hashrate is a key security metric. The more hashing (computing) power in the network, the greater
+                its security and its overall resistance to attack. Although Bitcoin’s exact hashing power is unknown, it
+                is possible to estimate it from the number of blocks being mined and the current block difficulty.
+            </h3>
+        </div>
+        <div class="col-12 col-lg-5">
 
+            <canvas id="hash-rate"></canvas>
+
+        </div>
+    </div>
+
+    <div class="row min-h-100-full align-items-center justify-content-center">
         <div class="col-12 col-lg-5">
-            <h1 class="col-12 fw-bolder txt-blue mb-4">
-                CryptoInsight: Your hub for real-time cryptocurrency data, market analysis, and community chats.
-            </h1>
+            <h3 class="col-12 fw-bolder txt-blue mb-4">
+                The difficulty is a measure of how difficult it is to mine a Bitcoin block, or in more technical terms,
+                to find a hash below a given target. A high difficulty means that it will take more computing power to
+                mine the same number of blocks, making the network more secure against attacks. The difficulty
+                adjustment is directly related to the total estimated mining power estimated in the {hashrate} chart.
+            </h3>
         </div>
         <div class="col-12 col-lg-5">
-            <div id="chart-container welcome-sec">
-                <canvas id="hash-rate"></canvas>
-            </div>
+
+            <canvas id="difficulty"></canvas>
+
         </div>
-    </div> {% endcomment %}
+    </div>
+
+    <div class="row min-h-100-full align-items-center justify-content-center">
+        <div class="col-12 col-lg-5">
+            <h3 class="col-12 fw-bolder txt-blue mb-4">
+                Miners Revenue (USD)
+                <br>
+                Total value in USD of coinbase block rewards and transaction fees paid to miners.
+            </h3>
+        </div>
+        <div class="col-12 col-lg-5">
+
+            <canvas id="miners-revenue"></canvas>
+
+        </div>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
-        fetch('/api/chart_data?chart=pools') // Replace with your API endpoint
+        fetch('/api/chart_data') // Replace with your API endpoint
             .then(response => response.json())
             .then(data => {
                 const ctx = document.getElementById('myPieChart').getContext('2d');
@@ -107,51 +138,27 @@
             });
 
 
-        /*fetch('/api/chart_data?chart=hash-rate')
+
+        fetch('/api/chartss?chart=hash-rate')
             .then(response => response.json())
             .then(data => {
-                const ctx = document.getElementById('hash-rate').getContext('2d');
-                const myPieChart = new Chart(ctx, {
+                const hashRate = document.getElementById('hash-rate').getContext('2d');
+                let labels = data.values.map(item => {
+                    const date = new Date(item.x * 1000);
+                    return date.getFullYear(); // Get the year from the date
+                });
+                const hashRayeChart = new Chart(hashRate, {
                     type: 'line',
                     data: {
-                        labels: Object.keys(data),
+                        labels: labels,
                         datasets: [{
-                            data: Object.values(data),
-                            backgroundColor: [
-                                '#FF6384',
-                                '#36A2EB',
-                                '#FFCE56',
-                                '#4BC0C0',
-                                '#9966FF',
-                                '#FF9F40',
-                                '#FF5733',
-                                '#33FF57',
-                                '#FF33EB',
-                                '#33EBFF',
-                                '#FF3366',
-                                '#33FFCC',
-                                '#FF33CC',
-                                '#33FF66',
-                                '#FF3366'
-                            ],
-                            borderColor: [
-                                '#FF6384',
-                                '#36A2EB',
-                                '#FFCE56',
-                                '#4BC0C0',
-                                '#9966FF',
-                                '#FF9F40',
-                                '#FF5733',
-                                '#33FF57',
-                                '#FF33EB',
-                                '#33EBFF',
-                                '#FF3366',
-                                '#33FFCC',
-                                '#FF33CC',
-                                '#33FF66',
-                                '#FF3366'
-                            ],
-                            borderWidth: 1
+                            label: 'Total Hash Rate (TH/s)',
+                            data: data.values.map(item => item.y),
+                            backgroundColor: ['rgba(75, 192, 192, 0.2)'],
+                            borderColor: ['rgba(75, 192, 192, 1)'],
+                            borderWidth: 1,
+                            tension: 0,
+                            pointRadius: 0,
                         }]
                     },
                     options: {
@@ -171,7 +178,88 @@
                     }
                 });
             });
-            */
+
+
+        fetch('/api/chartss?chart=difficulty')
+            .then(response => response.json())
+            .then(data => {
+                const difficulty = document.getElementById('difficulty').getContext('2d');
+                let labels = data.values.map(item => {
+                    const date = new Date(item.x * 1000);
+                    return date.getFullYear();
+                });
+                const difficultyChart = new Chart(difficulty, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Network Difficulty',
+                            data: data.values.map(item => item.y),
+                            backgroundColor: ['rgba(75, 192, 192, 0.2)'],
+                            borderColor: ['rgba(75, 192, 192, 1)'],
+                            borderWidth: 1,
+                            tension: 0,
+                            pointRadius: 0,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function (tooltipItem) {
+                                        return tooltipItem.label + ': ' + tooltipItem.raw;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+
+        fetch('/api/chartss?chart=miners-revenue')
+            .then(response => response.json())
+            .then(data => {
+                const minersRevenue = document.getElementById('miners-revenue').getContext('2d');
+                let labels = data.values.map(item => {
+                    const date = new Date(item.x * 1000);
+                    return date.getFullYear();
+                });
+                const minersRevenueChart = new Chart(minersRevenue, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Miners Revenue (USD)',
+                            data: data.values.map(item => item.y),
+                            backgroundColor: ['rgba(75, 192, 192, 0.2)'],
+                            borderColor: ['rgba(75, 192, 192, 1)'],
+                            borderWidth: 1,
+                            tension: 0,
+                            pointRadius: 0,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function (tooltipItem) {
+                                        return tooltipItem.label + ': ' + tooltipItem.raw;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+
     });
 </script>
 <br>

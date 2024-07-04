@@ -19,10 +19,17 @@ class ChartView(View):
 
 
 def get_chart_data(request):
-    chart_name = request.GET.get("chart", None)
-    response = requests.get(f"https://api.blockchain.info/{chart_name}?timespan=5days")
+    response = requests.get(f" https://api.blockchain.info/pools?timespan=5days")
     data = response.json()
-    print(data)
+    return JsonResponse(data)
+
+
+def chartss(request):
+    chart_name = request.GET.get("chart", None)
+    response = requests.get(
+        f"https://api.blockchain.info/charts/{chart_name}"
+    )
+    data = response.json()
     return JsonResponse(data)
 
 
