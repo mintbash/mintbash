@@ -55,6 +55,9 @@ body {
 .min-h-100-full {
   min-height: 100vh;
 }
+.min-h-70-full {
+  min-height: 70vh;
+}
 .navbar {
   -webkit-box-shadow: 0px 15px 26px -25px rgba(0, 0, 0, 0.78);
   -moz-box-shadow: 0px 15px 26px -25px rgba(0, 0, 0, 0.78);
@@ -494,4 +497,61 @@ div input:-internal-autofill-selected {
   font-size: 1rem !important;
   transition: 0.25s;
   font-weight: 600;
+}
+.outer {
+  display: flex;
+  flex-wrap: wrap;
+  height: 40px;
+  background-color: rgb(238, 238, 238);
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 0px;
+  margin: 5px 3px;
+  width: auto; /* Remove fixed width */
+  margin-left: auto; /* Pushes the container to the right */
+  margin-right: auto; /* Ensures equal space on both sides */
+  margin-bottom: 20px;
+}
+
+.but {
+  background-color: transparent;
+  flex: 1 1 0%;
+  height: 100%;
+  min-width: 50px;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  display: flex;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 300;
+  color: rgba(0, 0, 0, 0.5);
+  transition: color 0s ease 0s, transform 0.15s ease-in 0s;
+}
+
+.but:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.but-active {
+  background-color: transparent;
+  flex: 1 1 0%;
+  height: 100%;
+  min-width: 50px;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  display: flex;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 900;
+  color: rgb(0, 0, 0);
+  transition: color 0s ease 0s, transform 0.15s ease-in 0s;
+}
+.block {
+  pointer-events: none;
 }
