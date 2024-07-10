@@ -29,6 +29,29 @@
     <br>
     <br>
     <br>
+    <div class="row min-h-100-full align-items-center justify-content-center">
+        <div class="col-12 col-lg-5">
+            <h3 class="col-12 fw-bolder txt-blue mb-4">
+                The graph above shows the market share of the most popular bitcoin mining pools. It should only be used
+                as a rough estimate and for various reasons will not be 100% accurate. Blocks that are grouped into the
+                'Unknown' category do not mean an attack on the network, it simply means we have been unable to
+                determine the origin. The table below shows a detailed breakdown of the most recent blocks mined.
+            </h3>
+        </div>
+        <div class="col-12 col-lg-5">
+            <div id="chart-container welcome-sec">
+                {% comment %} <div class="outer pool-buttons">
+                    <button class="but" value="1months">1M</button>
+                    <button class="but" value="3months">3M</button>
+                    <button class="but" value="6months">6M</button>
+                    <button class="but but-active" value="1y">1Y</button>
+                    <button class="but" value="3y">3Y</button>
+                    <button class="but" value="all">All</button>
+                </div> {% endcomment %}
+                <canvas id="myPieChart"></canvas>
+            </div>
+        </div>
+    </div>
     <div class="row min-h-70-full align-items-center justify-content-center">
         <div class="col-12 col-lg-5">
             <h3 class="col-12 fw-bolder txt-blue mb-4">
@@ -90,19 +113,6 @@
                 <button class="but" value="all">All</button>
             </div>
             <canvas id="miners-revenue"></canvas>
-        </div>
-    </div>
-
-    <div class="row min-h-100-full align-items-center justify-content-center">
-        <div class="col-12 col-lg-5">
-            <h3 class="col-12 fw-bolder txt-blue mb-4">
-                CryptoInsight: Your hub for real-time cryptocurrency data, market analysis, and community chats.
-            </h3>
-        </div>
-        <div class="col-12 col-lg-5">
-            <div id="chart-container welcome-sec">
-                <canvas id="myPieChart"></canvas>
-            </div>
         </div>
     </div>
 
@@ -315,6 +325,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
         let chartInstances = {};
+        let pieChart = '';
 
         function generateLabels(timestamps, timespan) {
             let labels = [];
@@ -322,26 +333,13 @@
             const startTimestamp = moment.utc(timestamps[0]).unix(); // Start timestamp of the dataset
             const span = parseInt(timespan.replace(/[a-zA-Z]/g, '')); // Extract numeric part of timespan
 
-            // Always generate daily labels
+            // Generate labels based on timestamps
             for (let i = 0; i < timestamps.length; i++) {
                 const date = moment.unix(timestamps[i]);
-                labels.push(date.format("D MMM YYYY")); // Format as Day Month Year
+                labels.push(date.format("D MMM YYYY"));
             }
-
-            // Filter labels based on the timespan
-            if (timespan === "1months") {
-                labels = labels.filter((_, index) => index % 2 === 0);
-            } else if (timespan === "3months") {
-                labels = labels.filter((_, index) => index % 5 === 0);
-            } else if (timespan === "6months" || timespan === "1y" || timespan === "3y") {
-                // No filtering needed for these timespans
-            }
-
             return labels;
         }
-
-
-
 
         function handleButtonClick(groupClass, chartName, timespan) {
 
@@ -380,10 +378,6 @@
                             label
                     }
                     const ctx = document.getElementById(chartName).getContext('2d');
-                    /*let labels = data.values.map(item => {
-                        const date = new Date(item.x * 1000);
-                        return date.getFullYear();
-                    });*/
                     const labels = generateLabels(data.values.map(item => item.x), timespan);
                     console.log("labels", labels)
                     chartInstances[chartName] = new Chart(ctx, {
@@ -408,11 +402,44 @@
                                     position: 'top',
                                 },
                                 tooltip: {
+                                    enabled: true, // Enable tooltips
+                                    mode: 'nearest', // Show tooltip for the nearest element
+                                    intersect: false, // Do not require intersection
+                                    position: 'nearest', // Position tooltip near the element
+                                    bodySpacing: 5, // Space between tooltip and target element
+                                    xPadding: 10, // Horizontal padding inside tooltip
+                                    yPadding: 10, // Vertical padding inside tooltip
+                                    caretPadding: 10, // Padding around the caret
+                                    cornerRadius: 6, // Corner radius of the tooltip
+                                    footerFont: {
+                                        size: 14, // Font size of the footer text
+                                    },
                                     callbacks: {
                                         label: function (tooltipItem) {
                                             return tooltipItem.label + ': ' + tooltipItem.raw;
                                         }
-                                    }
+                                    },
+                                    scales: {
+                                        x: {
+                                            type: 'time', // Set the axis type to time
+                                            time: {
+                                                unit: 'day', // Optional: Specify the unit of time for the axis
+                                                displayFormats: {
+                                                    day: 'D MMM YYYY' // Custom format for the day unit
+                                                }
+                                            },
+                                            title: {
+                                                display: true,
+                                                text: 'Date'
+                                            }
+                                        },
+                                        y: {
+                                            title: {
+                                                display: true,
+                                                text: 'Value'
+                                            }
+                                        }
+                                    },
                                 }
                             }
                         }
@@ -448,72 +475,98 @@
             });
         });
 
+        function pool(groupClass, timespan) {
+            if (groupClass) {
+                document.querySelectorAll(`.${groupClass} .but`).forEach(btn => btn.classList.remove(
+                    'but-active'));
+                this.classList.add('but-active');
+                $("body").addClass("block");
+                $("#loader-modal").modal("show");
+            }
 
 
-        fetch('/api/chart_data')
-            .then(response => response.json())
-            .then(data => {
-                const ctx = document.getElementById('myPieChart').getContext('2d');
-                const myPieChart = new Chart(ctx, {
-                    type: 'pie',
-                    data: {
-                        labels: Object.keys(data),
-                        datasets: [{
-                            data: Object.values(data),
-                            backgroundColor: [
-                                '#FF6384',
-                                '#36A2EB',
-                                '#FFCE56',
-                                '#4BC0C0',
-                                '#9966FF',
-                                '#FF9F40',
-                                '#FF5733',
-                                '#33FF57',
-                                '#FF33EB',
-                                '#33EBFF',
-                                '#FF3366',
-                                '#33FFCC',
-                                '#FF33CC',
-                                '#33FF66',
-                                '#FF3366'
-                            ],
-                            borderColor: [
-                                '#FF6384',
-                                '#36A2EB',
-                                '#FFCE56',
-                                '#4BC0C0',
-                                '#9966FF',
-                                '#FF9F40',
-                                '#FF5733',
-                                '#33FF57',
-                                '#FF33EB',
-                                '#33EBFF',
-                                '#FF3366',
-                                '#33FFCC',
-                                '#FF33CC',
-                                '#33FF66',
-                                '#FF3366'
-                            ],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        plugins: {
-                            legend: {
-                                position: 'top',
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    label: function (tooltipItem) {
-                                        return tooltipItem.label + ': ' + tooltipItem.raw;
+            // Destroy any existing chart on the canvas before creating a new one
+            if (pieChart) {
+                pieChart.destroy();
+                pieChart = '';
+            }
+
+            fetch(`/api/pool-data?timespan=${timespan}`)
+                .then(response => response.json())
+                .then(data => {
+                    const ctx = document.getElementById('myPieChart').getContext('2d');
+                    pieChart = new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                            labels: Object.keys(data),
+                            datasets: [{
+                                data: Object.values(data),
+                                backgroundColor: [
+                                    '#FF6384',
+                                    '#36A2EB',
+                                    '#FFCE56',
+                                    '#4BC0C0',
+                                    '#9966FF',
+                                    '#FF9F40',
+                                    '#FF5733',
+                                    '#33FF57',
+                                    '#FF33EB',
+                                    '#33EBFF',
+                                    '#FF3366',
+                                    '#33FFCC',
+                                    '#FF33CC',
+                                    '#33FF66',
+                                    '#FF3366'
+                                ],
+                                borderColor: [
+                                    '#FF6384',
+                                    '#36A2EB',
+                                    '#FFCE56',
+                                    '#4BC0C0',
+                                    '#9966FF',
+                                    '#FF9F40',
+                                    '#FF5733',
+                                    '#33FF57',
+                                    '#FF33EB',
+                                    '#33EBFF',
+                                    '#FF3366',
+                                    '#33FFCC',
+                                    '#FF33CC',
+                                    '#33FF66',
+                                    '#FF3366'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function (tooltipItem) {
+                                            return tooltipItem.label + ': ' + tooltipItem.raw;
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
+                    });
                 });
+        }
+
+        pool("", "10days");
+
+        document.querySelectorAll('.pool-buttons .but').forEach(button => {
+            button.addEventListener('click', function () {
+                handleButtonClick.call(this, 'pool-buttons', this
+                    .getAttribute('value'));
             });
+        });
+
+
     });
 
 

@@ -4,7 +4,7 @@ from . import views
 urlpatterns = [
     path("", views.HomeView.as_view(), name="home"),
     path("charts/", views.ChartView.as_view(), name="charts"),
-    path("api/chart_data/", views.get_chart_data, name="chart_data"),
+    path("api/pool-data/", views.get_pool_data, name="pool_data"),
     path("api/chartss/", views.chartss, name="chartss"),
     path("api/block_account/", views.get_block_account, name="block_account"),
     path("api/latest_hash/", views.get_latest_hash, name="latest_hash"),

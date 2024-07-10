@@ -18,16 +18,19 @@ class ChartView(View):
         return render(request, "crypto/charts.html", context=context)
 
 
-def get_chart_data(request):
-    response = requests.get(f" https://api.blockchain.info/pools?timespan=5days")
+def get_pool_data(request):
+    timespan = request.GET.get("timespan", None)
+    response = requests.get(f"https://api.blockchain.info/pools?timespan={timespan}")
     data = response.json()
+    print("i am data", data)
     return JsonResponse(data)
 
 
 def chartss(request):
     chart_name = request.GET.get("chart", None)
+    timespan = request.GET.get("timespan", None)
     response = requests.get(
-        f"https://api.blockchain.info/charts/{chart_name}"
+        f"https://api.blockchain.info/charts/{chart_name}?timespan={timespan}"
     )
     data = response.json()
     return JsonResponse(data)
