@@ -347,8 +347,9 @@
                 document.querySelectorAll(`.${groupClass} .but`).forEach(btn => btn.classList.remove(
                     'but-active'));
                 this.classList.add('but-active');
-                $("body").addClass("block");
+                /*$("body").addClass("block");
                 $("#loader-modal").modal("show");
+                */
             }
 
 
@@ -362,8 +363,10 @@
             fetch(`/api/chartss?chart=${chartName}&timespan=${timespan}`)
                 .then(response => response.json())
                 .then(data => {
+                    /*
                     $("#loader-modal").modal("hide");
                     $("body").removeClass("block");
+                    */
                     let label = ""
                     switch (chartName) {
                         case "hash-rate":
